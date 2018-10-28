@@ -14,8 +14,7 @@ If you do not have `pipenv` installed, first install it with `pip3 install pipen
 Usage: blink.py [OPTIONS]
 
 Options:
-  -i, --input TEXT        name of the input file (must be text file format;
-                          urls line by line).  [required]
+  -it, --input_type TEXT  type of the input (can be single/bulk followed by the url/textFile).  [required]
   -o, --output TEXT       name of the folder to save the screenshots to.
                           [default: screenshots]
   -ws, --windowsize TEXT  window size of the screenshot.  [default: 1200x600]
@@ -26,13 +25,22 @@ Options:
 ### Example
 
 ```console
-python3 blink.py -i example -o example -ws 1920x1080 -to 5
+python3 blink.py -it single acme.com -o example -ws 1920x1080 -to 5
+
+[:] Creating example folder...
+[:] Processing 1 URL(s)
+[1/1] Opening acme.com
+[:] Done processing example.txt
+
+python3 blink.py -it bulk example.txt -o example -ws 1920x1080 -to 5
 
 [:] Creating example folder...
 [:] Processing 1 URL(s)
 [1/1] Opening acme.com
 [:] Done processing example.txt
 ```
+
+
 
 ### Format
 
