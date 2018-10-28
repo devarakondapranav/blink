@@ -34,13 +34,16 @@ def output_handler(output_folder):
 
 @click.command(context_settings=dict(help_option_names=["-h", "--help"]))
 @click.option(
-    "-i",
-    "--input",
-    "input_file",
+    "-it",
+    "--inputType",
+    "input_type",
+    nargs=2,
     type=str,
-    required=True,
-    help="name of the input file (must be text file format; urls line by line).",
+    default="bulk",
+    show_default=True,
+    help="set the input type to single if only one url has to screenshotted and specify the url next, set to bulk if many urls exist and specfy the .txt folder next",
 )
+
 @click.option(
     "-o",
     "--output",
@@ -68,15 +71,24 @@ def output_handler(output_folder):
     show_default=True,
     help="webpage request timeout in seconds.",
 )
+
+
+
+
 @check_ssl
-def main(input_file, output_folder, window_size, time_out):
+def main(input_type, output_folder, window_size, time_out):
     output_location = output_handler(output_folder)
 
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
     options.add_argument("window-size=%s" % window_size)
 
-    url_list = [line.rstrip() for line in open(input_handler(input_file), 'r')]
+    if(input_type[0] == "single"):
+        input_file = input_type[1]
+        url_list = [input_file]
+    else:
+        input_file = input_type[1]
+        url_list = [line.rstrip() for line in open(input_handler(input_file), 'r')]
 
     page_amount = len(url_list)
     page_counter = 0
